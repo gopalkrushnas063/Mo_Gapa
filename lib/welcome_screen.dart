@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui/pages/introduction_page.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
     // Add a delay and then animate the opacity
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _opacity = 1.0; // Set opacity to 1 for a fade-in effect
       });
@@ -26,19 +27,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: AnimatedOpacity(
-          duration: Duration(seconds: 1), // Adjust the duration as needed
+          duration: const Duration(seconds: 1), // Adjust the duration as needed
           opacity: _opacity,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 55),
+                const SizedBox(height: 55),
                 Image.asset(
                   "assets/images/home_logo.png",
                   width: 200,
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   "ମୋ ଗପ ବହି",
                   style: TextStyle(
                     fontSize: 38,
@@ -46,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     color: Color.fromARGB(255, 218, 142, 11),
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Column(
                   children: [
                     Image.asset(
@@ -73,8 +74,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 35),
-                Text(
+                const SizedBox(height: 35),
+                const Text(
                   "ଆସ ଆମେ ପଢିବା ଆମ ପିଲାଦିନ ଗପ",
                   style: TextStyle(
                     fontSize: 20,
@@ -82,16 +83,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 35),
+                const SizedBox(height: 35),
                 SizedBox(
                   width: 250,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IntroductionPage(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 218, 142, 11),
+                      backgroundColor: const Color.fromARGB(255, 218, 142, 11),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
