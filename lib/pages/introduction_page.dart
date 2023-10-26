@@ -29,16 +29,27 @@ class IntroductionPage extends StatelessWidget {
           title: const Center(
             child: Text(
               "ଉପକ୍ରମ",
-              style:
-                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 218, 142, 11),
+          leading: IconButton(
+            icon: const Icon(Icons.dashboard,color: Colors.white,), 
+            onPressed: () {
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.share,color: Colors.white,), 
+              onPressed: () {
+              },
+            ),
+          ],
           automaticallyImplyLeading: false,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40.0),
-              bottomRight: Radius.circular(40.0),
+              bottomLeft: Radius.circular(25.0),
+              bottomRight: Radius.circular(25.0),
             ),
           ),
         ),
