@@ -8,6 +8,7 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
+
 class _WelcomeScreenState extends State<WelcomeScreen> {
   double _opacity = 0.0; // Initial opacity value
 
