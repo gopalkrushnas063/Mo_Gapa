@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ui/pages/content_screen.dart';
+import 'package:share/share.dart';
+
 
 class IntroductionPage extends StatelessWidget {
   bool doubleBackToExit = false;
+
+   
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class IntroductionPage extends StatelessWidget {
             ),
           );
 
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             doubleBackToExit = false;
           });
 
@@ -42,7 +47,13 @@ class IntroductionPage extends StatelessWidget {
                 Icons.share,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                // Define the content you want to share
+                final String textToShare = "Share this text with your friends!";
+                
+                // Use the share package to share the content
+                Share.share(textToShare);
+              },
             ),
           ],
           automaticallyImplyLeading: false,

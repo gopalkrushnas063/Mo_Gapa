@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ui/pages/content_list.dart';
 import 'package:flutter/services.dart';
+import 'package:share/share.dart';
+import 'package:ui/pages/content_list.dart';
 import 'package:ui/pages/introduction_page.dart';
 
 class ContentPage extends StatefulWidget {
@@ -11,12 +12,22 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void shareContent() {
+    const String text = "Check out Gopal Story at \n gopalstory.com";
+    const String image =
+        'assets/images/home_logo.png'; 
 
+    Share.share(
+      text,
+      subject: image,
+        sharePositionOrigin:
+            Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey, // Assign the key to the Scaffold
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -31,7 +42,6 @@ class _ContentPageState extends State<ContentPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            // Open the navigation drawer when the dashboard icon is clicked
             _scaffoldKey.currentState?.openDrawer();
           },
         ),
@@ -41,7 +51,7 @@ class _ContentPageState extends State<ContentPage> {
               Icons.share,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: shareContent,
           ),
         ],
         shape: const RoundedRectangleBorder(
@@ -52,18 +62,21 @@ class _ContentPageState extends State<ContentPage> {
         ),
       ),
       drawer: Drawer(
-        // Add your drawer content here
         child: ListView(
           children: <Widget>[
             const UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 218, 142, 11),
               ),
-              accountName:
-                  Center(child: Text("ମୋ ଗପ",style: TextStyle(
+              accountName: Center(
+                child: Text(
+                  "ମୋ ଗପ",
+                  style: TextStyle(
                     fontSize: 35,
-                    fontWeight: FontWeight.w600
-                  ),),), // Replace with the user's name
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
               accountEmail: Text(
                 "“ମୋ ଗପ” ହେଉଛି କାହାଣୀ ଜଗତର ପ୍ରବେଶ ଦ୍ୱାର ଯାହା ବୟସ ପ୍ରତିବନ୍ଧକକୁ ଅତି\nକ୍ରମ କରି ମନୋରଞ୍ଜନ,ନୈତିକତା ଏବଂ ଜ୍ଞାନକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରେ\n",
                 textAlign: TextAlign.center,
@@ -79,7 +92,11 @@ class _ContentPageState extends State<ContentPage> {
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => IntroductionPage(),));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IntroductionPage(),
+                    ));
               },
               leading: const Icon(Icons.info_outline_rounded),
             ),
@@ -90,12 +107,9 @@ class _ContentPageState extends State<ContentPage> {
                 "ସେୟାର୍ ଆପ୍ (Share App)",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
-              onTap: () {
-                // Handle the item 2 click
-                // You can add navigation logic here
-              },
+              onTap:
+                  shareContent, // Call the shareContent function when the Share App item is clicked
             ),
-            // Add more list items as needed
           ],
         ),
       ),
@@ -128,4 +142,3 @@ class _ContentPageState extends State<ContentPage> {
     );
   }
 }
-
