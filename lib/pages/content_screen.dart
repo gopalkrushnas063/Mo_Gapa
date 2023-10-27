@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ui/model/story.dart';
 import 'package:ui/pages/introduction_page.dart';
+import 'package:ui/pages/story_details_view.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
 
 class ContentPage extends StatefulWidget {
@@ -13,6 +14,14 @@ class ContentPage extends StatefulWidget {
 
 class _ContentPageState extends State<ContentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void navigateToStoryDetails(Story story) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => StoryDetailsPage(story: story),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -96,14 +105,14 @@ class _ContentPageState extends State<ContentPage> {
               iconColor: Colors.orange,
               title: const Text(
                 "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               onTap: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => IntroductionPage(),
-                  ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IntroductionPage(),
+                    ));
               },
               leading: const Icon(Icons.info_outline_rounded),
             ),
@@ -122,9 +131,9 @@ class _ContentPageState extends State<ContentPage> {
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
           if (storyViewModel.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (storyViewModel.stories.isEmpty) {
-            return Center(child: Text("No stories available."));
+            return const Center(child: Text("No stories available."));
           } else {
             return ListView.builder(
               scrollDirection: Axis.vertical,
@@ -132,66 +141,72 @@ class _ContentPageState extends State<ContentPage> {
               itemCount: storyViewModel.stories.length,
               itemBuilder: (BuildContext context, int index) {
                 Story story = storyViewModel.stories[index];
-                return Container(
-                   decoration: const BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0),
-                  child: Card(
-                    margin: const EdgeInsets.only(left: 8.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                          vertical: 10.0,
+                return GestureDetector(
+                  onTap: () {
+                    navigateToStoryDetails(story);
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10.0),
+                    child: Card(
+                      margin: const EdgeInsets.only(left: 8.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
-                        leading: Container(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                width: 1.0,
-                                color: Colors.orange,
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 10.0,
+                          ),
+                          leading: Container(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                  width: 1.0,
+                                  color: Colors.orange,
+                                ),
                               ),
                             ),
+                            child: SvgPicture.asset(
+                              "assets/images/adventure.svg",
+                              width: 32,
+                              height: 32,
+                              color: Colors.indigo,
+                            ),
                           ),
-                          child: SvgPicture.asset(
-                            "assets/images/adventure.svg",
-                            width: 32,
-                            height: 32,
-                            color: Colors.indigo,
+                          title: Text(
+                            story.title,
+                            style: const TextStyle(
+                              color: Colors.indigo,
+                              fontSize: 21,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          story.title,
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 21,
-                            fontWeight: FontWeight.bold,
+                          subtitle: Row(
+                            children: <Widget>[
+                              const Icon(Icons.linear_scale,
+                                  color: Colors.orange),
+                              Text(
+                                story.type,
+                                style: const TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        subtitle: Row(
-                          children: <Widget>[
-                            Icon(Icons.linear_scale, color: Colors.orange),
-                            Text(
-                              story.type,
-                              style: TextStyle(
-                                color: Colors.orange,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            )
-                          ],
-                        ),
-                        trailing: const Icon(
-                          Icons.keyboard_arrow_right,
-                          color: Colors.orange,
-                          size: 30.0,
+                          trailing: const Icon(
+                            Icons.keyboard_arrow_right,
+                            color: Colors.orange,
+                            size: 30.0,
+                          ),
                         ),
                       ),
                     ),
