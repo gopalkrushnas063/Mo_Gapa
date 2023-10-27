@@ -35,13 +35,7 @@ class IntroductionPage extends StatelessWidget {
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 218, 142, 11),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.dashboard,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
+          leading: Container(),
           actions: [
             IconButton(
               icon: const Icon(

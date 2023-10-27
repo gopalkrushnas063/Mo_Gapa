@@ -32,5 +32,5 @@ final makeListTile = ListTile(
     ],
   ),
   trailing:
-      const Icon(Icons.keyboard_arrow_right, color: Colors.grey, size: 30.0),
+      const Icon(Icons.keyboard_arrow_right, color: Colors.orange, size: 30.0),
 );
