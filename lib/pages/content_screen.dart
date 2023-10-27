@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:ui/pages/content_list.dart';
+import 'package:ui/model/story.dart';
 import 'package:ui/pages/introduction_page.dart';
+import 'package:ui/viewmodel/story_view_model.dart';
 
 class ContentPage extends StatefulWidget {
   @override
@@ -12,14 +14,19 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  @override
+  void initState() {
+    super.initState();
+    // Fetch data from the API when the page is initialized
+    Provider.of<StoryViewModel>(context, listen: false).fetchDataFromApi();
+  }
+
   void shareContent() {
     const String text = "Check out Gopal Story at \n gopalstory.com";
-    const String image =
-        'assets/images/home_logo.png'; 
+    const String image = 'assets/images/home_logo.png';
 
-    Share.share(
-      text,
-      subject: image,
+    Share.share(text,
+        subject: image,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
   }
@@ -89,14 +96,14 @@ class _ContentPageState extends State<ContentPage> {
               iconColor: Colors.orange,
               title: const Text(
                 "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => IntroductionPage(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IntroductionPage(),
+                  ));
               },
               leading: const Icon(Icons.info_outline_rounded),
             ),
@@ -107,36 +114,92 @@ class _ContentPageState extends State<ContentPage> {
                 "ସେୟାର୍ ଆପ୍ (Share App)",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
-              onTap:
-                  shareContent, // Call the shareContent function when the Share App item is clicked
+              onTap: shareContent,
             ),
           ],
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            margin:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            child: Card(
-              margin: const EdgeInsets.only(left: 8.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                // Replace makeListTile with your content
-                child: makeListTile,
-              ),
-            ),
-          );
+      body: Consumer<StoryViewModel>(
+        builder: (context, storyViewModel, child) {
+          if (storyViewModel.isLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (storyViewModel.stories.isEmpty) {
+            return Center(child: Text("No stories available."));
+          } else {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: storyViewModel.stories.length,
+              itemBuilder: (BuildContext context, int index) {
+                Story story = storyViewModel.stories[index];
+                return Container(
+                   decoration: const BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 10.0),
+                  child: Card(
+                    margin: const EdgeInsets.only(left: 8.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical: 10.0,
+                        ),
+                        leading: Container(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              right: BorderSide(
+                                width: 1.0,
+                                color: Colors.orange,
+                              ),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/images/adventure.svg",
+                            width: 32,
+                            height: 32,
+                            color: Colors.indigo,
+                          ),
+                        ),
+                        title: Text(
+                          story.title,
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            fontSize: 21,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Row(
+                          children: <Widget>[
+                            Icon(Icons.linear_scale, color: Colors.orange),
+                            Text(
+                              story.type,
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.orange,
+                          size: 30.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
         },
       ),
     );
