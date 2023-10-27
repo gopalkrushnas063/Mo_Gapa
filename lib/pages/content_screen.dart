@@ -203,7 +203,7 @@ class _ContentPageState extends State<ContentPage> {
                             ],
                           ),
                           trailing: const Icon(
-                            Icons.keyboard_arrow_right,
+                            Icons.fast_forward,
                             color: Colors.orange,
                             size: 30.0,
                           ),

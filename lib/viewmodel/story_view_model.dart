@@ -11,7 +11,7 @@ class StoryViewModel extends ChangeNotifier {
     isLoading = true; // Set isLoading to true when data fetching starts
     notifyListeners();
 
-    final response = await http.get(Uri.parse("https://story-book-api.onrender.com/api/story"));
+    final response = await http.get(Uri.parse("https://gopalkrushnas.github.io/storybook_api/storybookapi.json"));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
