@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ui/model/story.dart';
 import 'package:ui/pages/introduction_page.dart';
 import 'package:ui/pages/story_details_view.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class ContentPage extends StatefulWidget {
   @override
@@ -31,13 +32,12 @@ class _ContentPageState extends State<ContentPage> {
   }
 
   void shareContent() {
-    const String text = "Check out Gopal Story at \n gopalstory.com";
+    const String text = "Check out Gopal Story at gopalstory.com";
     const String image = 'assets/images/home_logo.png';
 
     Share.share(text,
         subject: image,
-        sharePositionOrigin:
-            Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+        sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
   }
 
   @override
@@ -45,15 +45,15 @@ class _ContentPageState extends State<ContentPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Center(
+        title: Center(
           child: Text(
             "ସୂଚୀପତ୍ର",
             style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 218, 142, 11),
+        backgroundColor: const Color(0xFFDA8E0B),
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.dashboard,
             color: Colors.white,
           ),
@@ -63,14 +63,14 @@ class _ContentPageState extends State<ContentPage> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.share,
               color: Colors.white,
             ),
             onPressed: shareContent,
           ),
         ],
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25.0),
             bottomRight: Radius.circular(25.0),
@@ -80,9 +80,9 @@ class _ContentPageState extends State<ContentPage> {
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 218, 142, 11),
+                color: const Color(0xFFDA8E0B),
               ),
               accountName: Center(
                 child: Text(
@@ -103,23 +103,24 @@ class _ContentPageState extends State<ContentPage> {
             ),
             ListTile(
               iconColor: Colors.orange,
-              title: const Text(
+              title: Text(
                 "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => IntroductionPage(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IntroductionPage(),
+                  ),
+                );
               },
-              leading: const Icon(Icons.info_outline_rounded),
+              leading: Icon(Icons.info_outline_rounded),
             ),
             ListTile(
               iconColor: Colors.orange,
-              leading: const Icon(Icons.share),
-              title: const Text(
+              leading: Icon(Icons.share),
+              title: Text(
                 "ସେୟାର୍ ଆପ୍ (Share App)",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
@@ -131,9 +132,9 @@ class _ContentPageState extends State<ContentPage> {
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
           if (storyViewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else if (storyViewModel.stories.isEmpty) {
-            return const Center(child: Text("No stories available."));
+            return Center(child: Text("No stories available."));
           } else {
             return ListView.builder(
               scrollDirection: Axis.vertical,
@@ -141,21 +142,38 @@ class _ContentPageState extends State<ContentPage> {
               itemCount: storyViewModel.stories.length,
               itemBuilder: (BuildContext context, int index) {
                 Story story = storyViewModel.stories[index];
+
+                // Calculate the color index to cycle through the colors
+                int colorIndex = index % 5;
+
+                // Define the colors based on the index
+                List<Color> colors = [
+                  Colors.orange,
+                  Colors.green,
+                  Colors.indigo,
+                  Colors.brown,
+                  Colors.red,
+                ];
+
+                Color containerColor = colors[colorIndex];
+
                 return GestureDetector(
                   onTap: () {
                     navigateToStoryDetails(story);
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.orange,
+                    decoration: BoxDecoration(
+                      color: containerColor,
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                     ),
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
+                      horizontal: 10.0,
+                      vertical: 10.0,
+                    ),
                     child: Card(
                       margin: const EdgeInsets.only(left: 8.0),
                       child: Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
@@ -166,45 +184,50 @@ class _ContentPageState extends State<ContentPage> {
                           ),
                           leading: Container(
                             padding: const EdgeInsets.only(right: 12.0),
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               border: Border(
                                 right: BorderSide(
                                   width: 1.0,
-                                  color: Colors.orange,
+                                  color: containerColor,
                                 ),
                               ),
                             ),
-                            child: SvgPicture.asset(
-                              "assets/images/adventure.svg",
+                            child: Image.network(
+                              story.icon,
                               width: 32,
                               height: 32,
-                              color: Colors.indigo,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.error_outline,
+                                  color: containerColor,
+                                  size: 32,
+                                );
+                              },
                             ),
                           ),
                           title: Text(
                             story.title,
-                            style: const TextStyle(
-                              color: Colors.indigo,
+                            style: TextStyle(
+                              color: containerColor,
                               fontSize: 21,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Row(
                             children: <Widget>[
-                              const Icon(Icons.linear_scale,
-                                  color: Colors.orange),
+                              Icon(Icons.linear_scale, color: containerColor),
                               Text(
                                 story.type,
-                                style: const TextStyle(
-                                  color: Colors.orange,
+                                style: TextStyle(
+                                  color: containerColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               )
                             ],
                           ),
-                          trailing: const Icon(
+                          trailing: Icon(
                             Icons.fast_forward,
-                            color: Colors.orange,
+                            color: containerColor,
                             size: 30.0,
                           ),
                         ),

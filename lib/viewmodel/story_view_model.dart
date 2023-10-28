@@ -16,7 +16,6 @@ class StoryViewModel extends ChangeNotifier {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       stories = jsonResponse.map((data) => Story.fromJson(data)).toList();
-      print(stories);
 
       isLoading = false; // Set isLoading to false when data is loaded
       notifyListeners();

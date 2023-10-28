@@ -21,6 +21,7 @@ dependencies:
   zoom_widget: ^2.0.1
   provider: ^6.0.5
   http: ^1.1.0
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:

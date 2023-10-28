@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:ui/model/story.dart';
-import 'package:ui/pages/introduction_page.dart';
 
 class StoryDetailsPage extends StatelessWidget {
   final Story story;
@@ -73,7 +72,7 @@ class StoryDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              if (story.image != null && story.image.isNotEmpty)
+              if (story.image.isNotEmpty)
                 Image.network(
                   story.image,
                   width: double.infinity,
