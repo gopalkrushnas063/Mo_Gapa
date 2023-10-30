@@ -73,12 +73,31 @@ class StoryDetailsPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               if (story.image.isNotEmpty)
-                Image.network(
-                  story.image,
-                  width: double.infinity,
-                  height: 200,
-                  fit: BoxFit.cover,
-                )
+                Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20), // Border radius for the image
+    border: Border.all(
+      width: 3.0, // Border width
+    ),
+    boxShadow: [
+      BoxShadow(
+        
+        blurRadius: 5.0, // Shadow blur radius
+        offset: Offset(0, 1), // Shadow offset
+      ),
+    ],
+  ),
+  child: ClipRRect(
+    borderRadius: BorderRadius.circular(20),
+    child: Image.network(
+      story.image,
+      width: double.infinity,
+      height: 350,
+      fit: BoxFit.cover,
+    ),
+  ),
+)
+
               else
                 Image.asset(
                   'assets/images/home_banner_2.png',
