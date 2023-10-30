@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ui/model/story.dart';
 import 'package:ui/pages/introduction_page.dart';
 import 'package:ui/pages/story_details_view.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
 
 class ContentPage extends StatefulWidget {
+  const ContentPage({super.key});
+
   @override
   _ContentPageState createState() => _ContentPageState();
 }
@@ -37,7 +38,8 @@ class _ContentPageState extends State<ContentPage> {
 
     Share.share(text,
         subject: image,
-        sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+        sharePositionOrigin: Rect.fromCenter(
+            center: const Offset(0, 0), width: 100, height: 100));
   }
 
   @override
@@ -45,7 +47,7 @@ class _ContentPageState extends State<ContentPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "ସୂଚୀପତ୍ର",
             style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
@@ -53,7 +55,7 @@ class _ContentPageState extends State<ContentPage> {
         ),
         backgroundColor: const Color(0xFFDA8E0B),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.dashboard,
             color: Colors.white,
           ),
@@ -63,78 +65,84 @@ class _ContentPageState extends State<ContentPage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.share,
               color: Colors.white,
             ),
             onPressed: shareContent,
           ),
         ],
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25.0),
             bottomRight: Radius.circular(25.0),
           ),
         ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: const Color(0xFFDA8E0B),
-              ),
-              accountName: Center(
-                child: Text(
-                  "ମୋ ଗପ",
+      drawer: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor:
+              Color(0xFFDA8E0B), // Set your desired status bar color
+        ),
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFFDA8E0B),
+                ),
+                accountName: Center(
+                  child: Text(
+                    "ମୋ ଗପ",
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                accountEmail: Text(
+                  "“ମୋ ଗପ” ହେଉଛି କାହାଣୀ ଜଗତର ପ୍ରବେଶ ଦ୍ୱାର ଯାହା ବୟସ ପ୍ରତିବନ୍ଧକକୁ ଅତି\nକ୍ରମ କରି ମନୋରଞ୍ଜନ,ନୈତିକତା ଏବଂ ଜ୍ଞାନକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରେ\n",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 10,
                   ),
                 ),
               ),
-              accountEmail: Text(
-                "“ମୋ ଗପ” ହେଉଛି କାହାଣୀ ଜଗତର ପ୍ରବେଶ ଦ୍ୱାର ଯାହା ବୟସ ପ୍ରତିବନ୍ଧକକୁ ଅତି\nକ୍ରମ କରି ମନୋରଞ୍ଜନ,ନୈତିକତା ଏବଂ ଜ୍ଞାନକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରେ\n",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 10,
+              ListTile(
+                iconColor: Colors.orange,
+                title: const Text(
+                  "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IntroductionPage(),
+                    ),
+                  );
+                },
+                leading: const Icon(Icons.info_outline_rounded),
               ),
-            ),
-            ListTile(
-              iconColor: Colors.orange,
-              title: Text(
-                "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ListTile(
+                iconColor: Colors.orange,
+                leading: const Icon(Icons.share),
+                title: const Text(
+                  "ସେୟାର୍ ଆପ୍ (Share App)",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                onTap: shareContent,
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => IntroductionPage(),
-                  ),
-                );
-              },
-              leading: Icon(Icons.info_outline_rounded),
-            ),
-            ListTile(
-              iconColor: Colors.orange,
-              leading: Icon(Icons.share),
-              title: Text(
-                "ସେୟାର୍ ଆପ୍ (Share App)",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-              ),
-              onTap: shareContent,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
           if (storyViewModel.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (storyViewModel.stories.isEmpty) {
-            return Center(child: Text("No stories available."));
+            return const Center(child: Text("No stories available."));
           } else {
             return ListView.builder(
               scrollDirection: Axis.vertical,
@@ -164,7 +172,7 @@ class _ContentPageState extends State<ContentPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: containerColor,
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
                     ),
                     margin: const EdgeInsets.symmetric(
                       horizontal: 10.0,
@@ -173,7 +181,7 @@ class _ContentPageState extends State<ContentPage> {
                     child: Card(
                       margin: const EdgeInsets.only(left: 8.0),
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
@@ -192,17 +200,21 @@ class _ContentPageState extends State<ContentPage> {
                                 ),
                               ),
                             ),
-                            child: Image.network(
-                              story.icon,
-                              width: 32,
-                              height: 32,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  Icons.error_outline,
-                                  color: containerColor,
-                                  size: 32,
-                                );
-                              },
+                            child: ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  containerColor, BlendMode.srcIn),
+                              child: Image.network(
+                                story.icon,
+                                width: 38,
+                                height: 38,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Icon(
+                                    Icons.error_outline,
+                                    color: containerColor,
+                                    size: 38,
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           title: Text(
