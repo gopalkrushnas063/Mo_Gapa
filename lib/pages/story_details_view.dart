@@ -16,7 +16,7 @@ class StoryDetailsPage extends StatelessWidget {
     Share.share(text,
         subject: image,
         sharePositionOrigin:
-            Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+            Rect.fromCenter(center: const Offset(0, 0), width: 100, height: 100));
   }
 
   @override
@@ -79,7 +79,7 @@ class StoryDetailsPage extends StatelessWidget {
     border: Border.all(
       width: 3.0, // Border width
     ),
-    boxShadow: [
+    boxShadow: const [
       BoxShadow(
         
         blurRadius: 5.0, // Shadow blur radius
