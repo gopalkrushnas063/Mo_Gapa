@@ -25,13 +25,6 @@ class _ContentPageState extends State<ContentPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    // Fetch data from the API when the page is initialized
-    Provider.of<StoryViewModel>(context, listen: false).fetchDataFromApi();
-  }
-
   void shareContent() {
     const String text = "Check out Gopal Story at gopalstory.com";
     const String image = 'assets/images/home_logo.png';
@@ -43,7 +36,16 @@ class _ContentPageState extends State<ContentPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Fetch data from the API when the page is initialized
+    Provider.of<StoryViewModel>(context, listen: false).fetchDataFromApi();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final storyViewModel = Provider.of<StoryViewModel>(context);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -81,8 +83,7 @@ class _ContentPageState extends State<ContentPage> {
       ),
       drawer: AnnotatedRegion<SystemUiOverlayStyle>(
         value: const SystemUiOverlayStyle(
-          statusBarColor:
-              Color(0xFFDA8E0B), // Set your desired status bar color
+          statusBarColor: Color(0xFFDA8E0B),
         ),
         child: CustomDrawer(),
       ),
@@ -99,11 +100,7 @@ class _ContentPageState extends State<ContentPage> {
               itemCount: storyViewModel.stories.length,
               itemBuilder: (BuildContext context, int index) {
                 Story story = storyViewModel.stories[index];
-
-                // Calculate the color index to cycle through the colors
                 int colorIndex = index % 5;
-
-                // Define the colors based on the index
                 List<Color> colors = [
                   Colors.orange,
                   Colors.green,
@@ -111,7 +108,6 @@ class _ContentPageState extends State<ContentPage> {
                   Colors.brown,
                   Colors.red,
                 ];
-
                 Color containerColor = colors[colorIndex];
 
                 return GestureDetector(
@@ -209,7 +205,6 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      
       child: ListView(
         children: <Widget>[
           const UserAccountsDrawerHeader(
