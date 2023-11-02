@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "807843638675",
+    "project_id": "mogapapushnotification",
+    "storage_bucket": "mogapapushnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807843638675:android:0c0ed54aec32f0adfd8c66",
+        "android_client_info": {
+          "package_name": "com.example.mogapa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNz0C6JNOqvdd7TcPyYnJuwnuFsdUQts0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807843638675:android:06b598d60490017cfd8c66",
+        "android_client_info": {
+          "package_name": "com.example.ui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNz0C6JNOqvdd7TcPyYnJuwnuFsdUQts0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
