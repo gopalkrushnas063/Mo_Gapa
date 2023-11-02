@@ -11,59 +11,45 @@ class IntroductionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (doubleBackToExit) {
-          return true;
-        } else {
-          doubleBackToExit = true;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Press back again to exit"),
-            ),
-          );
-
-          Future.delayed(const Duration(seconds: 2), () {
-            doubleBackToExit = false;
-          });
-
-          return false;
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "ମୋ ଗପ",
-              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-            ),
-          ),
-          backgroundColor: const Color.fromARGB(255, 218, 142, 11),
-          leading: Container(),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // Define the content you want to share
-                final String textToShare = "Share this text with your friends!";
-
-                // Use the share package to share the content
-                Share.share(textToShare);
-              },
-            ),
-          ],
-          automaticallyImplyLeading: false,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(25.0),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "ମୋ ଗପ",
+            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
           ),
         ),
-        body: const Center(
+        backgroundColor: const Color.fromARGB(255, 218, 142, 11),
+        leading: Container(),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // Define the content you want to share
+              final String textToShare = "Share this text with your friends!";
+
+              // Use the share package to share the content
+              Share.share(textToShare);
+            },
+          ),
+        ],
+        automaticallyImplyLeading: false,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0),
+          ),
+        ),
+      ),
+      body: WillPopScope(
+        onWillPop: () async {
+        
+        return false;
+      },
+        child: const Center(
           child: Column(
             children: [
               Padding(
@@ -91,27 +77,27 @@ class IntroductionPage extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: RippleAnimation(
-          color: Colors.orange,
-          delay: const Duration(milliseconds: 300),
-          repeat: true,
-          minRadius: 75,
-          ripplesCount: 7,
-          duration: const Duration(milliseconds: 8 * 300),
-          child: FloatingActionButton(
-            backgroundColor: const Color.fromARGB(255, 218, 142, 11),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ContentPage(),
-                ),
-              );
-            },
-            child: const Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
-            ),
+      ),
+      floatingActionButton: RippleAnimation(
+        color: Colors.orange,
+        delay: const Duration(milliseconds: 300),
+        repeat: true,
+        minRadius: 75,
+        ripplesCount: 7,
+        duration: const Duration(milliseconds: 8 * 300),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 218, 142, 11),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContentPage(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_forward,
+            color: Colors.white,
           ),
         ),
       ),

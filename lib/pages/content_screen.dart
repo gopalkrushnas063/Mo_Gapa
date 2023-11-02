@@ -29,10 +29,12 @@ class _ContentPageState extends State<ContentPage> {
     const String text = "Check out Gopal Story at gopalstory.com";
     const String image = 'assets/images/home_logo.png';
 
-    Share.share(text,
-        subject: image,
-        sharePositionOrigin: Rect.fromCenter(
-            center: const Offset(0, 0), width: 100, height: 100));
+    Share.share(
+      text,
+      subject: image,
+      sharePositionOrigin:
+          Rect.fromCenter(center: const Offset(0, 0), width: 100, height: 100),
+    );
   }
 
   @override
@@ -85,7 +87,60 @@ class _ContentPageState extends State<ContentPage> {
         value: const SystemUiOverlayStyle(
           statusBarColor: Color(0xFFDA8E0B),
         ),
-        child: CustomDrawer(),
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFFDA8E0B),
+                ),
+                accountName: Center(
+                  child: Text(
+                    "ମୋ ଗପ",
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                accountEmail: Text(
+                  "“ମୋ ଗପ” ହେଉଛି କାହାଣୀ ଜଗତର ପ୍ରବେଶ ଦ୍ୱାର ଯାହ ବୟସ ପ୍ରତିବନ୍ଧକକୁ ଅତି\nକ୍ରମ କରି ମନୋରଞ୍ଜନ,ନୈତିକତା ଏବଂ ଜ୍ଞାନକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରେ\n",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+              ListTile(
+                iconColor: Colors.orange,
+                title: const Text(
+                  "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IntroductionPage(),
+                    ),
+                  );
+                },
+                leading: const Icon(Icons.info_outline_rounded),
+              ),
+              ListTile(
+                iconColor: Colors.orange,
+                leading: const Icon(Icons.share),
+                title: const Text(
+                  "ସେୟାର୍ ଆପ୍ (Share App)",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                onTap: () {
+                  shareContent();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
@@ -100,13 +155,19 @@ class _ContentPageState extends State<ContentPage> {
               itemCount: storyViewModel.stories.length,
               itemBuilder: (BuildContext context, int index) {
                 Story story = storyViewModel.stories[index];
-                int colorIndex = index % 5;
+                int colorIndex = index % 14;
                 List<Color> colors = [
                   Colors.orange,
                   Colors.green,
                   Colors.indigo,
                   Colors.brown,
                   Colors.red,
+                  Colors.blue,
+                  Colors.redAccent,
+                  Colors.lime,
+                  Colors.pink,
+                  Colors.blueGrey,
+                  const Color.fromARGB(255, 58, 162, 13)
                 ];
                 Color containerColor = colors[colorIndex];
 
@@ -196,66 +257,6 @@ class _ContentPageState extends State<ContentPage> {
             );
           }
         },
-      ),
-    );
-  }
-}
-
-class CustomDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: <Widget>[
-          const UserAccountsDrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFFDA8E0B),
-            ),
-            accountName: Center(
-              child: Text(
-                "ମୋ ଗପ",
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            accountEmail: Text(
-              "“ମୋ ଗପ” ହେଉଛି କାହାଣୀ ଜଗତର ପ୍ରବେଶ ଦ୍ୱାର ଯାହ ବୟସ ପ୍ରତିବନ୍ଧକକୁ ଅତି\nକ୍ରମ କରି ମନୋରଞ୍ଜନ,ନୈତିକତା ଏବଂ ଜ୍ଞାନକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରେ\n",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 10,
-              ),
-            ),
-          ),
-          ListTile(
-            iconColor: Colors.orange,
-            title: const Text(
-              "ମୋ ଗପ ବିଷୟରେ ସଂକ୍ଷିପ୍ତ (About Us)",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => IntroductionPage(),
-                ),
-              );
-            },
-            leading: const Icon(Icons.info_outline_rounded),
-          ),
-          ListTile(
-            iconColor: Colors.orange,
-            leading: const Icon(Icons.share),
-            title: const Text(
-              "ସେୟାର୍ ଆପ୍ (Share App)",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            ),
-            onTap: () {
-              // Add your share action here
-            },
-          ),
-        ],
       ),
     );
   }
