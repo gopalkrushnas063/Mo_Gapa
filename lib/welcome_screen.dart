@@ -44,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: TextStyle(
                     fontSize: 38,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 218, 142, 11),
+                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -96,8 +96,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                       );
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 218, 142, 11),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return const Color.fromARGB(
+                                255, 200, 132, 8); // Darker color when pressed
+                          }
+                          return const Color.fromARGB(
+                              255, 218, 142, 11); // Default color
+                        },
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      elevation: MaterialStateProperty.resolveWith(
+                        (states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return 4; // Adjust elevation when pressed
+                          }
+                          return 8; // Default elevation
+                        },
+                      ),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,7 +139,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

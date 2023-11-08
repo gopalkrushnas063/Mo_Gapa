@@ -13,10 +13,15 @@ class StoryDetailsPage extends StatelessWidget {
     const String text = "Check out Gopal Story at \n gopalstory.com";
     const String image = 'assets/images/home_logo.png';
 
-    Share.share(text,
-        subject: image,
-        sharePositionOrigin:
-            Rect.fromCenter(center: const Offset(0, 0), width: 100, height: 100));
+    Share.share(
+      text,
+      subject: image,
+      sharePositionOrigin: Rect.fromCenter(
+        center: const Offset(0, 0),
+        width: 100,
+        height: 100,
+      ),
+    );
   }
 
   @override
@@ -74,30 +79,29 @@ class StoryDetailsPage extends StatelessWidget {
               const SizedBox(height: 16),
               if (story.image.isNotEmpty)
                 Container(
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(20), // Border radius for the image
-    border: Border.all(
-      width: 3.0, // Border width
-    ),
-    boxShadow: const [
-      BoxShadow(
-        
-        blurRadius: 5.0, // Shadow blur radius
-        offset: Offset(0, 1), // Shadow offset
-      ),
-    ],
-  ),
-  child: ClipRRect(
-    borderRadius: BorderRadius.circular(20),
-    child: Image.network(
-      story.image,
-      width: double.infinity,
-      height: 350,
-      fit: BoxFit.cover,
-    ),
-  ),
-)
-
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        20), // Border radius for the image
+                    border: Border.all(
+                      width: 3.0, // Border width
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 5.0, // Shadow blur radius
+                        offset: Offset(0, 1), // Shadow offset
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      story.image,
+                      width: double.infinity,
+                      height: 350,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
               else
                 Image.asset(
                   'assets/images/home_banner_2.png',
@@ -106,12 +110,15 @@ class StoryDetailsPage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               const SizedBox(height: 16),
-              Text(
-                story.content,
-                style: const TextStyle(
-                  fontSize: 16,
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  story.content,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
-                textAlign: TextAlign.justify,
               ),
             ],
           ),

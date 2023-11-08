@@ -145,7 +145,16 @@ class _ContentPageState extends State<ContentPage> {
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
           if (storyViewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return  Center(
+                child: SizedBox(
+              width: 300, 
+              height: 8, 
+              child: LinearProgressIndicator(
+                backgroundColor: Colors.grey.shade300, 
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                    Color.fromARGB(255, 218, 142, 11)), 
+              ),
+            ));
           } else if (storyViewModel.stories.isEmpty) {
             return const Center(child: Text("No stories available."));
           } else {
