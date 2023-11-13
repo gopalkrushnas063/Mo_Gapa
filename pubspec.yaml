@@ -25,12 +25,16 @@ dependencies:
   simple_ripple_animation: ^0.0.7
   firebase_core: ^2.21.0
   firebase_messaging: ^14.7.3
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+
+
 
 
 flutter:
