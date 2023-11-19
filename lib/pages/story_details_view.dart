@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:ui/model/story.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+
+
 
 class StoryDetailsPage extends StatelessWidget {
   final Story story;
@@ -9,24 +15,32 @@ class StoryDetailsPage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void shareContent() {
-    String text = "${story.title}\n\n${story.content}";
-    String image = story.image.isNotEmpty ? story.image : 'assets/images/home_banner_2.png';
+  Future<void> shareContent(BuildContext context) async {
+    String text = "*${story.title}*\n\n${story.content}\n\nFor more story go to playstore and download\ncom.krishnatechworld.mogapabahi";
+    String imageUrl = story.image.isNotEmpty
+        ? story.image
+        : 'assets/images/home_banner_2.png';
 
-    Share.share(
-      text,
-      subject: 'Check out ${story.title}',
-      sharePositionOrigin: Rect.fromCenter(
-        center: const Offset(0, 0),
-        width: 100,
-        height: 100,
-      ),
-    );
+    if (imageUrl.startsWith('http')) {
+      // Download the image file to local storage
+      final response = await http.get(Uri.parse(imageUrl));
+      final documentDirectory = await getApplicationDocumentsDirectory();
+      final file = File('${documentDirectory.path}/image.png');
+      await file.writeAsBytes(response.bodyBytes);
+
+      // Share the image file
+      await Share.shareFiles([file.path], text: text);
+    } else {
+      // If it's a local image, directly share it
+      await Share.shareFiles([imageUrl], text: text);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = story.image.isNotEmpty ? story.image : 'assets/images/home_banner_2.png';
+    String imageUrl = story.image.isNotEmpty
+        ? story.image
+        : 'assets/images/home_banner_2.png';
 
     return Scaffold(
       key: _scaffoldKey,
@@ -125,7 +139,9 @@ class StoryDetailsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 218, 142, 11),
-        onPressed: shareContent,
+       onPressed: () async {
+          await shareContent(context);
+        },
         child: const Icon(
           Icons.share,
           color: Colors.white,
