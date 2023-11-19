@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +8,8 @@ import 'package:ui/model/story.dart';
 import 'package:ui/pages/introduction_page.dart';
 import 'package:ui/pages/story_details_view.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 class ContentPage extends StatefulWidget {
   const ContentPage({super.key});
@@ -25,23 +29,32 @@ class _ContentPageState extends State<ContentPage> {
     );
   }
 
-  void shareContent() {
-    const String text = "Check out Gopal Story at gopalstory.com";
-    const String image = 'assets/images/home_logo.png';
-
-    Share.share(
-      text,
-      subject: image,
-      sharePositionOrigin:
-          Rect.fromCenter(center: const Offset(0, 0), width: 100, height: 100),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     // Fetch data from the API when the page is initialized
     Provider.of<StoryViewModel>(context, listen: false).fetchDataFromApi();
+  }
+
+  Future<void> shareContent(BuildContext context) async {
+    String text =
+        "For more story go to playstore and download\ncom.krishnatechworld.mogapabahi";
+    String imageUrl =
+        "https://play-lh.googleusercontent.com/lm16K3Mf2KE8FlTrIaumQzk-UiWyiaTJjhr-jchx3MZSZjdv05i_-YRZNOvzKMPKCA=w240-h480-rw";
+
+    if (imageUrl.startsWith('http')) {
+      // Download the image file to local storage
+      final response = await http.get(Uri.parse(imageUrl));
+      final documentDirectory = await getApplicationDocumentsDirectory();
+      final file = File('${documentDirectory.path}/image.png');
+      await file.writeAsBytes(response.bodyBytes);
+
+      // Share the image file
+      await Share.shareFiles([file.path], text: text);
+    } else {
+      // If it's a local image, directly share it
+      await Share.shareFiles([imageUrl], text: text);
+    }
   }
 
   @override
@@ -69,12 +82,11 @@ class _ContentPageState extends State<ContentPage> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.share,
-              color: Colors.white,
-            ),
-            onPressed: shareContent,
-          ),
+            onPressed: () async {
+                  await shareContent(context);
+                }, 
+            icon: Icon(Icons.share,color: Colors.white,)
+          )
         ],
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -134,8 +146,8 @@ class _ContentPageState extends State<ContentPage> {
                   "ସେୟାର୍ ଆପ୍ (Share App)",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
-                onTap: () {
-                  shareContent();
+                onTap: () async {
+                  await shareContent(context);
                 },
               ),
             ],
@@ -145,14 +157,14 @@ class _ContentPageState extends State<ContentPage> {
       body: Consumer<StoryViewModel>(
         builder: (context, storyViewModel, child) {
           if (storyViewModel.isLoading) {
-            return  Center(
+            return Center(
                 child: SizedBox(
-              width: 300, 
-              height: 8, 
+              width: 300,
+              height: 8,
               child: LinearProgressIndicator(
-                backgroundColor: Colors.grey.shade300, 
+                backgroundColor: Colors.grey.shade300,
                 valueColor: const AlwaysStoppedAnimation<Color>(
-                    Color.fromARGB(255, 218, 142, 11)), 
+                    Color.fromARGB(255, 218, 142, 11)),
               ),
             ));
           } else if (storyViewModel.stories.isEmpty) {
