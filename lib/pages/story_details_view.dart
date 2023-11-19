@@ -5,17 +5,17 @@ import 'package:ui/model/story.dart';
 class StoryDetailsPage extends StatelessWidget {
   final Story story;
 
-  StoryDetailsPage({super.key, required this.story});
+  StoryDetailsPage({Key? key, required this.story}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void shareContent() {
-    const String text = "Check out Gopal Story at \n gopalstory.com";
-    const String image = 'assets/images/home_logo.png';
+    String text = "${story.title}\n\n${story.content}";
+    String image = story.image.isNotEmpty ? story.image : 'assets/images/home_banner_2.png';
 
     Share.share(
       text,
-      subject: image,
+      subject: 'Check out ${story.title}',
       sharePositionOrigin: Rect.fromCenter(
         center: const Offset(0, 0),
         width: 100,
@@ -26,6 +26,8 @@ class StoryDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = story.image.isNotEmpty ? story.image : 'assets/images/home_banner_2.png';
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -80,22 +82,19 @@ class StoryDetailsPage extends StatelessWidget {
               if (story.image.isNotEmpty)
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        20), // Border radius for the image
-                    border: Border.all(
-                      width: 3.0, // Border width
-                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(width: 3.0),
                     boxShadow: const [
                       BoxShadow(
-                        blurRadius: 5.0, // Shadow blur radius
-                        offset: Offset(0, 1), // Shadow offset
+                        blurRadius: 5.0,
+                        offset: Offset(0, 1),
                       ),
                     ],
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      story.image,
+                      imageUrl,
                       width: double.infinity,
                       height: 350,
                       fit: BoxFit.cover,
