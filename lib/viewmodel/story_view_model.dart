@@ -13,7 +13,10 @@ class StoryViewModel extends ChangeNotifier {
     error = "";
 
     try {
-      final response = await http.get(Uri.parse("https://gopalkrushnas.github.io/storybook_api/storybookapi.json"));
+      final response = await http.get(
+        Uri.parse(
+            "https://gopalkrushnas.github.io/storybook_api/storybookapi.json"),
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(response.body);

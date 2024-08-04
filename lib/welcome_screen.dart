@@ -25,124 +25,88 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: AnimatedOpacity(
-          duration: const Duration(seconds: 1), // Adjust the duration as needed
-          opacity: _opacity,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/home_logo.png",
+            ),
+            const Text(
+              "ମୋ ଗପ ବହି",
+              style: TextStyle(
+                fontSize: 38,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                
+              ),
+              
+            ),
+            Column(
               children: [
-                const SizedBox(height: 55),
                 Image.asset(
-                  "assets/images/home_logo.png",
+                  "assets/images/energi-energy.gif",
                   width: 200,
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  "ମୋ ଗପ ବହି",
-                  style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Image.asset(
-                      "assets/images/energi-energy.gif",
-                      width: 200,
+                      "assets/images/celebration.gif",
+                      width: 70,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          "assets/images/celebration.gif",
-                          width: 70,
-                        ),
-                        Transform(
-                          alignment: Alignment.center,
-                          transform:
-                              Matrix4.rotationY(3.141), // Rotate 180 degrees
-                          child: Image.asset(
-                            "assets/images/celebration.gif",
-                            width: 70,
-                          ),
-                        ),
-                      ],
+                    Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(3.141),
+                      child: Image.asset(
+                        "assets/images/celebration.gif",
+                        width: 70,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 35),
-                const Text(
-                  "ଆସ ଆମେ ପଢିବା ଆମ ପିଲାଦିନ ଗପ",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 35),
-                SizedBox(
-                  width: 250,
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => IntroductionPage(),
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return const Color.fromARGB(
-                                255, 200, 132, 8); // Darker color when pressed
-                          }
-                          return const Color.fromARGB(
-                              255, 218, 142, 11); // Default color
-                        },
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      elevation: MaterialStateProperty.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return 4; // Adjust elevation when pressed
-                          }
-                          return 8; // Default elevation
-                        },
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "ଆସନ୍ତୁ ଆଗକୁ ବଢ଼ିବା",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
-          ),
+            const Text(
+              "ଆସ ଆମେ ପଢିବା ଆମ ପିଲାଦିନ ଗପ",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 15),  
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IntroductionPage(),
+                  ),
+                );
+              },
+              child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 200, 132, 8),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "ଆସନ୍ତୁ ଆଗକୁ ବଢ଼ିବା",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  )),
+            )
+          ],
         ),
       ),
     );
