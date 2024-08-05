@@ -6,6 +6,7 @@ import 'package:ui/model/story.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:transparent_image/transparent_image.dart';
+import 'package:ui/widgets/music_widget.dart';
 
 
 
@@ -125,17 +126,29 @@ class StoryDetailsPage extends StatelessWidget {
                   height: 200,
                   fit: BoxFit.cover,
                 ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  story.content,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.justify,
-                ),
+              const SizedBox(height: 26),
+
+              SizedBox(
+               height: 120,
+                child: MusicWidget(),
               ),
+              
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      story.content,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
+              ),
+            
+            
             ],
           ),
         ),
@@ -143,7 +156,8 @@ class StoryDetailsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 218, 142, 11),
        onPressed: () async {
-          await shareContent(context);
+          // await shareContent(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MusicWidget(),));
         },
         child: const Icon(
           Icons.share,
