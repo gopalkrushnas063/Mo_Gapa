@@ -1,26 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ui/pages/introduction_page.dart';
+import 'package:ui/features/introduction/view/introduction_page.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  WelcomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  double _opacity = 0.0; // Initial opacity value
-
-  @override
-  void initState() {
-    super.initState();
-    // Add a delay and then animate the opacity
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _opacity = 1.0; // Set opacity to 1 for a fade-in effect
-      });
-    });
-  }
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +14,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Image.asset(
               "assets/images/home_logo.png",
+              width: 200,
             ),
             const Text(
               "ମୋ ଗପ ବହି",
               style: TextStyle(
                 fontSize: 38,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
-                
-              ),
-              
+                color: Colors.black,  
+              ), 
             ),
             Column(
               children: [

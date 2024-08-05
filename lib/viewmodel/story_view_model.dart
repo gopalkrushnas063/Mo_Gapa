@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ui/model/story.dart';
+import 'package:ui/data/model/story.dart';
 import 'package:http/http.dart' as http;
 
 class StoryViewModel extends ChangeNotifier {
-  List<Story> stories = [];
+  List<StoryModel> stories = [];
   bool isLoading = false;
   String error = "";
 
@@ -20,7 +20,7 @@ class StoryViewModel extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(response.body);
-        stories = jsonResponse.map((data) => Story.fromJson(data)).toList();
+        stories = jsonResponse.map((data) => StoryModel.fromJson(data)).toList();
         isLoading = false;
       } else {
         error = "Failed to load data from API";

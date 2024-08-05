@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:ui/api/firebase_api.dart';
 import 'package:ui/firebase_options.dart';
-import 'package:ui/pages/notification_page.dart';
+import 'package:ui/features/notification/view/notification_page.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
 import 'package:ui/welcome_screen.dart';
-
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -16,9 +16,12 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseApi().initNotification();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => StoryViewModel(),
-      child: const MyApp(),
+    // ChangeNotifierProvider(
+    //   create: (context) => StoryViewModel(),
+    //   child: const MyApp(),
+    // ),
+    const ProviderScope(
+      child: MyApp(),
     ),
   );
 }
@@ -28,7 +31,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Set the status bar color here
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Color.fromARGB(255, 218, 142, 11),
     ));
@@ -37,13 +39,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mo Gapa Bahi',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 218, 142, 11)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 218, 142, 11),
+        ),
         useMaterial3: true,
       ),
-      home: WelcomeScreen(),
+      home: const WelcomeScreen(),
       navigatorKey: navigatorKey,
       routes: {
-        '/notification_screen':(context) => const NotificationPage(),
+        '/notification_screen': (context) => const NotificationPage(),
       },
     );
   }

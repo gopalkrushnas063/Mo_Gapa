@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:ui/model/story.dart';
-import 'package:ui/pages/introduction_page.dart';
-import 'package:ui/pages/story_details_view.dart';
+import 'package:ui/data/model/story.dart';
+import 'package:ui/features/introduction/view/introduction_page.dart';
+import 'package:ui/features/story/view/story_details_view.dart';
 import 'package:ui/viewmodel/story_view_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +21,7 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void navigateToStoryDetails(Story story) {
+  void navigateToStoryDetails(StoryModel story) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => StoryDetailsPage(story: story),
@@ -43,16 +43,12 @@ class _ContentPageState extends State<ContentPage> {
         "https://play-lh.googleusercontent.com/lm16K3Mf2KE8FlTrIaumQzk-UiWyiaTJjhr-jchx3MZSZjdv05i_-YRZNOvzKMPKCA=w240-h480-rw";
 
     if (imageUrl.startsWith('http')) {
-      // Download the image file to local storage
       final response = await http.get(Uri.parse(imageUrl));
       final documentDirectory = await getApplicationDocumentsDirectory();
       final file = File('${documentDirectory.path}/image.png');
       await file.writeAsBytes(response.bodyBytes);
-
-      // Share the image file
       await Share.shareFiles([file.path], text: text);
     } else {
-      // If it's a local image, directly share it
       await Share.shareFiles([imageUrl], text: text);
     }
   }
@@ -85,7 +81,7 @@ class _ContentPageState extends State<ContentPage> {
             onPressed: () async {
                   await shareContent(context);
                 }, 
-            icon: Icon(Icons.share,color: Colors.white,)
+            icon: const Icon(Icons.share, color: Colors.white,)
           )
         ],
         shape: const RoundedRectangleBorder(
@@ -170,26 +166,27 @@ class _ContentPageState extends State<ContentPage> {
           } else if (storyViewModel.stories.isEmpty) {
             return const Center(child: Text("No stories available."));
           } else {
+            List<Color> colors = [
+              Colors.orange,
+              Colors.green,
+              Colors.indigo,
+              Colors.brown,
+              Colors.red,
+              Colors.blue,
+              Colors.redAccent,
+              Colors.lime,
+              Colors.pink,
+              Colors.blueGrey,
+              const Color.fromARGB(255, 58, 162, 13)
+            ];
+
             return ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: storyViewModel.stories.length,
               itemBuilder: (BuildContext context, int index) {
-                Story story = storyViewModel.stories[index];
-                int colorIndex = index % 14;
-                List<Color> colors = [
-                  Colors.orange,
-                  Colors.green,
-                  Colors.indigo,
-                  Colors.brown,
-                  Colors.red,
-                  Colors.blue,
-                  Colors.redAccent,
-                  Colors.lime,
-                  Colors.pink,
-                  Colors.blueGrey,
-                  const Color.fromARGB(255, 58, 162, 13)
-                ];
+                StoryModel story = storyViewModel.stories[index];
+                int colorIndex = index % colors.length; // Use length of colors list
                 Color containerColor = colors[colorIndex];
 
                 return GestureDetector(
@@ -199,7 +196,7 @@ class _ContentPageState extends State<ContentPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: containerColor,
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
                     ),
                     margin: const EdgeInsets.symmetric(
                       horizontal: 10.0,
