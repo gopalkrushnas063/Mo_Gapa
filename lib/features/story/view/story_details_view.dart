@@ -9,12 +9,10 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:ui/widgets/music_widget.dart';
 
 
-
-
 class StoryDetailsPage extends StatelessWidget {
   final StoryModel story;
 
-  StoryDetailsPage({Key? key, required this.story}) : super(key: key);
+  StoryDetailsPage({super.key, required this.story});
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 

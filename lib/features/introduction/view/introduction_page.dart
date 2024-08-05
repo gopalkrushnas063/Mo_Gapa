@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:ui/features/content/view/content_screen.view.dart';
 
 class IntroductionPage extends StatefulWidget {
+  const IntroductionPage({super.key});
+
   @override
   State<IntroductionPage> createState() => _IntroductionPageState();
 }

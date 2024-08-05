@@ -16,8 +16,7 @@ class ContentScreen extends ConsumerStatefulWidget {
   const ContentScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ContentScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ContentScreenState();
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
@@ -67,6 +66,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     final contentState = ref.watch(contentControllerProvider);
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -267,7 +267,9 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                         );
                       },
                     )
-                  : const Center(child: Text('No stories found')),
+                  : const Center(
+                      child: Text('No stories found'),
+                    ),
     );
   }
 }
