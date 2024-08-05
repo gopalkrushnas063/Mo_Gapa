@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
-import 'package:ui/features/content/view/content_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:ui/features/content/view/content_test.dart';
+import 'package:ui/features/content/view/content_screen.view.dart';
 
 class IntroductionPage extends StatefulWidget {
   @override
@@ -114,7 +113,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => ContentTestScreen(),
+                builder: (context) => ContentScreen(),
               ),
             );
           },

@@ -12,15 +12,15 @@ import 'package:ui/utility/enum.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-class ContentTestScreen extends ConsumerStatefulWidget {
-  const ContentTestScreen({super.key});
+class ContentScreen extends ConsumerStatefulWidget {
+  const ContentScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ContentTestScreenState();
+      _ContentScreenState();
 }
 
-class _ContentTestScreenState extends ConsumerState<ContentTestScreen> {
+class _ContentScreenState extends ConsumerState<ContentScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void navigateToStoryDetails(StoryModel story) {

@@ -128,7 +128,7 @@ class StoryDetailsPage extends StatelessWidget {
                 ),
               const SizedBox(height: 26),
 
-              SizedBox(
+              const SizedBox(
                height: 120,
                 child: MusicWidget(),
               ),
@@ -156,8 +156,7 @@ class StoryDetailsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 218, 142, 11),
        onPressed: () async {
-          // await shareContent(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MusicWidget(),));
+          await shareContent(context);
         },
         child: const Icon(
           Icons.share,
