@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ui/features/introduction/view/introduction_page.dart';
+import 'package:mogapabahi/features/introduction/view/introduction_page.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

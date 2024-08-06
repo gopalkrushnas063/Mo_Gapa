@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui/api/firebase_api.dart';
-import 'package:ui/firebase_options.dart';
-import 'package:ui/features/notification/view/notification_page.dart';
-import 'package:ui/welcome_screen.dart';
+import 'package:mogapabahi/api/firebase_api.dart';
+import 'package:mogapabahi/firebase_options.dart';
+import 'package:mogapabahi/features/notification/view/notification_page.dart';
+import 'package:mogapabahi/welcome_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 

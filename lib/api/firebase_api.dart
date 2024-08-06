@@ -1,5 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:ui/main.dart';
+import 'package:mogapabahi/main.dart';
 
 class FirebaseApi{
   // create an instance of Firebase Messaging

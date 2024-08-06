@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share/share.dart';
-import 'package:ui/data/model/story.dart';
-import 'package:ui/features/content/controller/content.controller.dart';
-import 'package:ui/features/introduction/view/introduction_page.dart';
-import 'package:ui/features/story/view/story_details_view.dart';
-import 'package:ui/utility/enum.dart';
+import 'package:mogapabahi/data/model/story.dart';
+import 'package:mogapabahi/features/content/controller/content.controller.dart';
+import 'package:mogapabahi/features/introduction/view/introduction_page.dart';
+import 'package:mogapabahi/features/story/view/story_details_view.dart';
+import 'package:mogapabahi/utility/enum.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 

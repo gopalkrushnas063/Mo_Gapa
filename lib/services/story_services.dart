@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ui/data/https/https.dart';
-import 'package:ui/data/model/story.dart';
+import 'package:mogapabahi/data/https/https.dart';
+import 'package:mogapabahi/data/model/story.dart';
 
 class StoryServices {
   static Future<List<StoryModel>?> getStories() async {

@@ -1,9 +1,9 @@
-name: ui
-description: A new Flutter project.
+name: mogapabahi
+description: Mo Gapa Bahi Aap invites you into a captivating realm of storytelling that spans a myriad of genres and themes, transcending age barriers to cater to the diverse literary cravings of readers. This app serves as a versatile and engaging platform, offering a treasure trove of stories that fall into the realms of morality, inspiration, and adventure.
 
 publish_to: 'none' 
 
-version: 1.0.1+4
+version: 1.0.1+5
 
 environment:
   sdk: '>=3.2.4 <4.0.0'

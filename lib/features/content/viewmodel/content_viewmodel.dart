@@ -1,5 +1,5 @@
-import 'package:ui/data/model/story.dart';
-import 'package:ui/utility/enum.dart';
+import 'package:mogapabahi/data/model/story.dart';
+import 'package:mogapabahi/utility/enum.dart';
 
 class ContentViewModel {
   final APIState status;

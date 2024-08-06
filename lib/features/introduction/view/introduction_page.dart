@@ -5,7 +5,7 @@ import 'package:share/share.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:ui/features/content/view/content_screen.view.dart';
+import 'package:mogapabahi/features/content/view/content_screen.view.dart';
 
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});

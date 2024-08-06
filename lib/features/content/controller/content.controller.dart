@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui/data/model/story.dart';
-import 'package:ui/features/content/viewmodel/content_viewmodel.dart';
-import 'package:ui/services/story_services.dart';
-import 'package:ui/utility/enum.dart';
+import 'package:mogapabahi/data/model/story.dart';
+import 'package:mogapabahi/features/content/viewmodel/content_viewmodel.dart';
+import 'package:mogapabahi/services/story_services.dart';
+import 'package:mogapabahi/utility/enum.dart';
 
 final contentControllerProvider =
     StateNotifierProvider<ContentController, ContentViewModel>((ref) {
