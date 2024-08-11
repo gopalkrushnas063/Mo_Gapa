@@ -4,7 +4,7 @@ class Http {
   static Dio get apiURL {
     Dio dio = Dio();
     try {
-      dio.options.baseUrl = 'https://gopalkrushnas.github.io/storybook_api';
+      dio.options.baseUrl = 'https://mogapabahi-431fe4166879.herokuapp.com';
       dio.interceptors.addAll(
         [
           InterceptorsWrapper(

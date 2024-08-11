@@ -1,18 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mogapabahi/api/firebase_api.dart';
-import 'package:mogapabahi/firebase_options.dart';
-import 'package:mogapabahi/features/notification/view/notification_page.dart';
+import 'package:mogapabahi/features/story/view/story_details_view.dart';
+import 'package:mogapabahi/services/onsignal_service.dart';
 import 'package:mogapabahi/welcome_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseApi().initNotification();
+  OneSignalService.initializeOneSignal();
+
+
   runApp(
     // ChangeNotifierProvider(
     //   create: (context) => StoryViewModel(),
@@ -42,11 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const WelcomeScreen(),
+      home:  WelcomeScreen(),
       navigatorKey: navigatorKey,
-      routes: {
-        '/notification_screen': (context) => const NotificationPage(),
-      },
+      
     );
   }
 }
