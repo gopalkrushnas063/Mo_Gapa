@@ -16,6 +16,8 @@ class OneSignalService {
       debugPrint("Token: ${OneSignal.User.pushSubscription.token}");
       debugPrint("State: ${state.current.jsonRepresentation()}");
     });
+    
+
   }
 
   static loginUser(String email) {
