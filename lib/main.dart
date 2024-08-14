@@ -10,7 +10,6 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   OneSignalService.initializeOneSignal();
-  OneSignalService.loginUser("ID567");
 
   runApp(
     // ChangeNotifierProvider(

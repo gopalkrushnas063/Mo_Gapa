@@ -15,19 +15,19 @@ class OneSignalService {
       debugPrint("Subscription ID: ${OneSignal.User.pushSubscription.id}");
       debugPrint("Token: ${OneSignal.User.pushSubscription.token}");
       debugPrint("State: ${state.current.jsonRepresentation()}");
+
+      // Log in with the token as the external ID
+      if (oneSignalToken != null) {
+        loginUser(oneSignalToken!);
+      }
     });
-    
-
   }
 
-  static loginUser(String email) {
-    OneSignal.login(email);
+  static loginUser(String externalId) {
+    OneSignal.login(externalId);
   }
 
-  static handleNotificationClick(BuildContext context) {
-    
-  }
+  static handleNotificationClick(BuildContext context) {}
 
-  
   static handleInApp() {}
 }
