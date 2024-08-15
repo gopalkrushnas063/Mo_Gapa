@@ -6,10 +6,11 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSignalService {
   static String? oneSignalToken;
+  static bool _notificationHandled = false;
 
   static initializeOneSignal() {
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-    OneSignal.initialize("e4a28ef9-0bd0-4a1b-a12e-021b2338e2f2");
+    OneSignal.initialize("ef913ce7-4ade-48b8-98fa-5ff2af18b678");
     OneSignal.Notifications.requestPermission(true);
 
     OneSignal.User.pushSubscription.addObserver((state) {
@@ -19,6 +20,9 @@ class OneSignalService {
       debugPrint("Token: ${OneSignal.User.pushSubscription.token}");
       debugPrint("State: ${state.current.jsonRepresentation()}");
     });
+
+    // Add click listener only once
+    OneSignalService.handleNotificationClick();
   }
 
   static loginUser(String email) {
@@ -26,16 +30,17 @@ class OneSignalService {
   }
 
   static handleNotificationClick() {
-    OneSignal.Notifications.addClickListener(
-      (OSNotificationClickEvent event) {
-        debugPrint("------Notification click event triggered------");
-        final notificationData = event.notification.additionalData;
-        if (notificationData != null) {
-          debugPrint('Notification Data: $notificationData');
-          parseNotification(notificationData);
-        }
-      },
-    );
+    OneSignal.Notifications.addClickListener((OSNotificationClickEvent event) {
+      if (_notificationHandled) return;
+
+      _notificationHandled = true; // Mark the notification as handled
+      debugPrint("------Notification click event triggered------");
+      final notificationData = event.notification.additionalData;
+      if (notificationData != null) {
+        debugPrint('Notification Data: $notificationData');
+        parseNotification(notificationData);
+      }
+    });
   }
 
   static parseNotification(Map<String, dynamic> notificationData) {
@@ -52,8 +57,12 @@ class OneSignalService {
 
     navigatorKey.currentState?.push(MaterialPageRoute(
       builder: (context) => NotificationScreen(),
-    ));
+    )).then((_) {
+      _notificationHandled = false;
+    });
   }
 
-  static handleInApp() {}
+  static handleInApp() {
+    _notificationHandled = false;
+  }
 }

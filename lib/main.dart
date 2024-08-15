@@ -9,9 +9,7 @@ import 'package:mogapabahi/features/story/view/story_details_view.dart';
 import 'package:mogapabahi/services/onsignal_service.dart';
 import 'package:mogapabahi/welcome_screen.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +21,6 @@ void main() async {
     ),
   );
 }
-
 
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
@@ -47,7 +44,7 @@ final GoRouter _router = GoRouter(
       },
     ),
     //StoryDetailsPage
-     GoRoute(
+    GoRoute(
       path: '/story',
       builder: (BuildContext context, GoRouterState state) {
         return StoryDetailsPage();
@@ -55,13 +52,12 @@ final GoRouter _router = GoRouter(
     ),
 
     //StoryDetailsPage
-     GoRoute(
+    GoRoute(
       path: '/story',
       builder: (BuildContext context, GoRouterState state) {
-        return const NotificationScreen();
+        return  NotificationScreen();
       },
     ),
-    
   ],
 );
 
@@ -74,39 +70,20 @@ class MyApp extends StatelessWidget {
       statusBarColor: Color.fromARGB(255, 218, 142, 11),
     ));
 
-    // WidgetsBinding.instance.addPostFrameCallback(
-    //   (timeStamp) {
-    //     OneSignalService.handleNotificationClick(context);
-    //   },
-    // );
-
-    //  return MaterialApp.router(
-    //   routerDelegate: _router.routerDelegate,
-    //   routeInformationParser: _router.routeInformationParser,
-    //   routeInformationProvider: _router.routeInformationProvider,
-    //   debugShowCheckedModeBanner: false,
-    //     title: 'Mo Gapa Bahi',
-    //   theme: ThemeData(
-    //     colorScheme: ColorScheme.fromSeed(
-    //       seedColor: const Color.fromARGB(255, 218, 142, 11),
-    //     ),
-    //     useMaterial3: true,
-    //   ),
-    // );
+   
 
     OneSignalService.handleNotificationClick();
-      return MaterialApp(
-
-        debugShowCheckedModeBanner: false,
-        title: 'Havahavai',
-        initialRoute: '/',
-
-        theme: ThemeData(
-          primaryColor: Colors.black,
-          scaffoldBackgroundColor: Colors.white,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Mo Gapa Bahi',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 218, 142, 11),
         ),
-        home: const WelcomeScreen(),
-        navigatorKey: navigatorKey,
-      );
+        useMaterial3: true,
+      ),
+      home: const WelcomeScreen(),
+      navigatorKey: navigatorKey,
+    );
   }
 }

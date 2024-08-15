@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mogapabahi/features/notification/view/notification_screen.dart';
 import 'package:share/share.dart';
 import 'package:mogapabahi/data/model/story.dart';
 import 'package:mogapabahi/features/content/controller/content.controller.dart';
@@ -20,6 +21,7 @@ class ContentScreen extends ConsumerStatefulWidget {
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void navigateToStoryDetails(StoryModel story) {
     Navigator.of(context).push(
@@ -65,6 +67,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     final contentState = ref.watch(contentControllerProvider);
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -79,6 +82,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             color: Colors.white,
           ),
           onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
           },
         ),
         actions: [
@@ -153,6 +157,17 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   await shareContent(context);
                 },
               ),
+              ListTile(
+                iconColor: Colors.orange,
+                leading: const Icon(Icons.notifications_outlined),
+                title: const Text(
+                  "ଘୋଷଣା (Notification)",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                onTap: ()  {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationScreen(),));
+                },
+              )
             ],
           ),
         ),
