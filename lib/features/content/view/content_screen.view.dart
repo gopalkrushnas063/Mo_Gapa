@@ -20,7 +20,6 @@ class ContentScreen extends ConsumerStatefulWidget {
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void navigateToStoryDetails(StoryModel story) {
     Navigator.of(context).push(
@@ -66,7 +65,6 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     final contentState = ref.watch(contentControllerProvider);
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -81,7 +79,6 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
           },
         ),
         actions: [

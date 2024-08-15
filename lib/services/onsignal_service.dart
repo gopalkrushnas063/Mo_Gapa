@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mogapabahi/features/notification/view/notification_screen.dart';
+import 'package:mogapabahi/main.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSignalService {
@@ -15,19 +18,42 @@ class OneSignalService {
       debugPrint("Subscription ID: ${OneSignal.User.pushSubscription.id}");
       debugPrint("Token: ${OneSignal.User.pushSubscription.token}");
       debugPrint("State: ${state.current.jsonRepresentation()}");
-
-      // Log in with the token as the external ID
-      if (oneSignalToken != null) {
-        loginUser(oneSignalToken!);
-      }
     });
   }
 
-  static loginUser(String externalId) {
-    OneSignal.login(externalId);
+  static loginUser(String email) {
+    OneSignal.login(email);
   }
 
-  static handleNotificationClick(BuildContext context) {}
+  static handleNotificationClick() {
+    OneSignal.Notifications.addClickListener(
+      (OSNotificationClickEvent event) {
+        debugPrint("------Notification click event triggered------");
+        final notificationData = event.notification.additionalData;
+        if (notificationData != null) {
+          debugPrint('Notification Data: $notificationData');
+          parseNotification(notificationData);
+        }
+      },
+    );
+  }
+
+  static parseNotification(Map<String, dynamic> notificationData) {
+    final key = notificationData['storyId'];
+
+    Fluttertoast.showToast(
+      msg: "Your story ID is $key",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+
+    navigatorKey.currentState?.push(MaterialPageRoute(
+      builder: (context) => NotificationScreen(),
+    ));
+  }
 
   static handleInApp() {}
 }

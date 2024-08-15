@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mogapabahi/features/notification/view/notification_screen.dart';
 import 'package:share/share.dart';
 import 'package:mogapabahi/data/model/story.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,16 +11,15 @@ import 'package:mogapabahi/widgets/music_widget.dart';
 
 
 class StoryDetailsPage extends StatelessWidget {
-  final StoryModel story;
+  final StoryModel? story;
 
-  StoryDetailsPage({super.key, required this.story});
+  StoryDetailsPage({super.key,  this.story});
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> shareContent(BuildContext context) async {
-    String text = "*${story.title}*\n\n${story.content}\n\nFor more story go to playstore and download\ncom.krishnatechworld.mogapabahi";
-    String imageUrl = story.image.isNotEmpty
-        ? story.image
+    String text = "*${story!.title}*\n\n${story!.content}\n\nFor more story go to playstore and download\ncom.krishnatechworld.mogapabahi";
+    String imageUrl = story!.image.isNotEmpty
+        ? story!.image
         : 'assets/images/home_banner_2.png';
 
     if (imageUrl.startsWith('http')) {
@@ -39,12 +39,11 @@ class StoryDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = story.image.isNotEmpty
-        ? story.image
+    String imageUrl = story!.image.isNotEmpty
+        ? story!.image
         : 'assets/images/home_banner_2.png';
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -68,7 +67,9 @@ class StoryDetailsPage extends StatelessWidget {
               Icons.notifications,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationScreen(),));
+            },
           ),
         ],
         shape: const RoundedRectangleBorder(
@@ -86,7 +87,7 @@ class StoryDetailsPage extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  story.title,
+                  story!.title,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class StoryDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              if (story.image.isNotEmpty)
+              if (story!.image.isNotEmpty)
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -136,7 +137,7 @@ class StoryDetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      story.content,
+                      story!.content,
                       style: const TextStyle(
                         fontSize: 16,
                       ),

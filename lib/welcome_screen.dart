@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mogapabahi/features/introduction/view/introduction_page.dart';
+
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    
+
+    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -66,6 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                     builder: (context) => IntroductionPage(),
                   ),
                 );
+                // context.push('/intro');
               },
               child: Container(
                   height: 55,
