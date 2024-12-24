@@ -7,7 +7,7 @@ import 'package:mogapabahi/features/story/view/story_details_view.dart';
 import 'package:mogapabahi/utility/enum.dart';
 
 class NotificationScreen extends ConsumerStatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  const NotificationScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -38,7 +38,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  IntroductionPage(),
+                                  const IntroductionPage(),
                             ),
                           );
         return false; // Prevent default back button behavior

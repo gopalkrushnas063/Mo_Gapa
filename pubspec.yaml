@@ -33,6 +33,7 @@ dependencies:
   onesignal_flutter: ^5.2.2
   fluttertoast: ^8.2.6
   go_router: ^14.2.3
+  win32: ^5.9.0
 
 dev_dependencies:
   flutter_test:

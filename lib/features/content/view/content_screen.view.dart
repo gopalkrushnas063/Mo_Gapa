@@ -140,7 +140,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => IntroductionPage(),
+                      builder: (context) => const IntroductionPage(),
                     ),
                   );
                 },
@@ -165,7 +165,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
                 onTap: ()  {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationScreen(),));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NotificationScreen(),));
                 },
               )
             ],

@@ -70,7 +70,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => IntroductionPage(),
+                    builder: (context) => const IntroductionPage(),
                   ),
                 );
                 // context.push('/intro');

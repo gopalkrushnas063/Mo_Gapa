@@ -13,7 +13,7 @@ import 'package:mogapabahi/widgets/music_widget.dart';
 class StoryDetailsPage extends StatelessWidget {
   final StoryModel? story;
 
-  StoryDetailsPage({super.key,  this.story});
+  const StoryDetailsPage({super.key,  this.story});
 
 
   Future<void> shareContent(BuildContext context) async {
@@ -68,7 +68,7 @@ class StoryDetailsPage extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationScreen(),));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NotificationScreen(),));
             },
           ),
         ],

@@ -58,7 +58,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             onPressed: () async {
                   await shareContent(context);
                 }, 
-            icon: Icon(Icons.share,color: Colors.white,)
+            icon: const Icon(Icons.share,color: Colors.white,)
           ),
         ],
         automaticallyImplyLeading: false,
@@ -110,7 +110,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => ContentScreen(),
+                builder: (context) => const ContentScreen(),
               ),
             );
             // context.push('/content');

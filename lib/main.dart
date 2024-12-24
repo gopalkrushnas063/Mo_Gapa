@@ -55,7 +55,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/story',
       builder: (BuildContext context, GoRouterState state) {
-        return  NotificationScreen();
+        return  const NotificationScreen();
       },
     ),
   ],

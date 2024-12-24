@@ -56,7 +56,7 @@ class OneSignalService {
     );
 
     navigatorKey.currentState?.push(MaterialPageRoute(
-      builder: (context) => NotificationScreen(),
+      builder: (context) => const NotificationScreen(),
     )).then((_) {
       _notificationHandled = false;
     });
