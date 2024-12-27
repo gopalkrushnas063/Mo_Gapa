@@ -14,9 +14,13 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+  RequestConfiguration requestConfiguration =
+      RequestConfiguration(testDeviceIds: ['9aa25d8a-08ed-4c85-a589-3610c7551e8d']);
+  MobileAds.instance.updateRequestConfiguration(requestConfiguration);
   OneSignalService.initializeOneSignal();
   // OneSignalService.handleNotificationClick();
-  MobileAds.instance.initialize();
+
   runApp(
     const ProviderScope(
       child: MyApp(),

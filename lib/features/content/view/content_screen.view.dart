@@ -389,12 +389,13 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   : const Center(
                       child: Text('No stories found'),
                     ),
-
-                    bottomNavigationBar: isBannerAdReady ? SizedBox(
-                      height: _bannerAd.size.height.toDouble(),
-                      width: _bannerAd.size.width.toDouble(),
-                      child: AdWidget(ad: _bannerAd),
-                    ) : null,
+      bottomNavigationBar: isBannerAdReady
+          ? SizedBox(
+              height: _bannerAd.size.height.toDouble(),
+              width: _bannerAd.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd),
+            )
+          : Text("Test AD"),
     );
   }
 }

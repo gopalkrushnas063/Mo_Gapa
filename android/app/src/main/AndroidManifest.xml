@@ -26,8 +26,9 @@
             </intent-filter>
         </activity>
         <meta-data
-              android:name="com.google.android.gms.ads.APPLICATION_ID"
-              android:resource="ca-app-pub-8558612038787013~4145180055" />
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8558612038787013~4145180055" />
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
