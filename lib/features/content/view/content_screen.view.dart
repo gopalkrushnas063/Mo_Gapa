@@ -33,7 +33,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     // TODO: implement initState
     super.initState();
     _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-8558612038787013/6207107319',
+      adUnitId: 'ca-app-pub-8558612038787013/3005157077',
       request: AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -52,7 +52,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     );
     _bannerAd.load();
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-8558612038787013/9954780639',
+      adUnitId: 'ca-app-pub-8558612038787013/1692075405',
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -68,6 +68,27 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
         },
       ),
     );
+  }
+
+  BannerAd createNewBannerAd() {
+    return BannerAd(
+      adUnitId: 'ca-app-pub-8558612038787013/3005157077',
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            isBannerAdReady = false;
+          });
+        },
+      ),
+    )..load();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -133,7 +154,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
 
           //load new ad
           InterstitialAd.load(
-            adUnitId: 'ca-app-pub-8558612038787013/9954780639',
+            adUnitId: 'ca-app-pub-8558612038787013/1692075405',
             request: AdRequest(),
             adLoadCallback: InterstitialAdLoadCallback(
               onAdLoaded: (ad) {
@@ -270,11 +291,11 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                       ));
                 },
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    _showInterstitialAd();
-                  },
-                  child: Text("Show Interstital Ad"))
+              // ElevatedButton(
+              //     onPressed: () {
+              //       _showInterstitialAd();
+              //     },
+              //     child: Text("Show Interstital Ad"))
             ],
           ),
         ),
@@ -285,18 +306,26 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
               ? const Center(child: Text('Failed to load stories'))
               : contentState.stories != null && contentState.stories!.isNotEmpty
                   ? ListView.builder(
-                      itemCount: contentState.stories!.length,
+                      itemCount: contentState.stories!.length +
+                          (isBannerAdReady
+                              ? (contentState.stories!.length / 2).ceil()
+                              : 0),
                       itemBuilder: (context, index) {
-                        final story = contentState.stories![index];
-                        int colorIndex =
-                            index % colors.length; // Use length of colors list
+                        if (isBannerAdReady && index % 3 == 2) {
+                          final bannerAd = createNewBannerAd();
+                          return SizedBox(
+                            height: bannerAd.size.height.toDouble(),
+                            width: bannerAd.size.width.toDouble(),
+                            child: AdWidget(ad: bannerAd),
+                          );
+                        }
+                        final storyIndex = isBannerAdReady
+                            ? index - (index / 3).floor()
+                            : index;
+                        final story = contentState.stories![storyIndex];
+                        int colorIndex = storyIndex %
+                            colors.length; // Use length of colors list
                         Color containerColor = colors[colorIndex];
-
-                        // return ListTile(
-                        //   leading: Image.network(story.image),
-                        //   title: Text(story.title),
-                        //   subtitle: Text(story.content),
-                        // );
 
                         return GestureDetector(
                           onTap: () {
@@ -395,7 +424,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
               width: _bannerAd.size.width.toDouble(),
               child: AdWidget(ad: _bannerAd),
             )
-          : Text("Test AD"),
+          : null,
     );
   }
 }
