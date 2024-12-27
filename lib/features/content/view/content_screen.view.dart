@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mogapabahi/features/notification/view/notification_screen.dart';
 import 'package:share/share.dart';
 import 'package:mogapabahi/data/model/story.dart';
@@ -21,6 +22,54 @@ class ContentScreen extends ConsumerStatefulWidget {
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
+  late BannerAd _bannerAd;
+  bool isBannerAdReady = false;
+
+  late InterstitialAd _interstitialAd;
+  bool isInterstitialAdReady = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8558612038787013/6207107319',
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(
+            () {
+              isBannerAdReady = true;
+            },
+          );
+        },
+        onAdFailedToLoad: (ad, error) {
+          isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+    _bannerAd.load();
+    InterstitialAd.load(
+      adUnitId: 'ca-app-pub-8558612038787013/9954780639',
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          setState(
+            () {
+              _interstitialAd = ad;
+              isInterstitialAdReady = true;
+            },
+          );
+        },
+        onAdFailedToLoad: (error) {
+          isInterstitialAdReady = false;
+        },
+      ),
+    );
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void navigateToStoryDetails(StoryModel story) {
@@ -59,6 +108,55 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
       await Share.shareFiles([file.path], text: text);
     } else {
       await Share.shareFiles([imageUrl], text: text);
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _bannerAd.dispose();
+    if (isBannerAdReady) {
+      _interstitialAd.dispose();
+    }
+    super.dispose();
+  }
+
+  void _showInterstitialAd() {
+    if (isInterstitialAdReady) {
+      _interstitialAd.show();
+      _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          setState(() {
+            isInterstitialAdReady = false;
+          });
+
+          //load new ad
+          InterstitialAd.load(
+            adUnitId: 'ca-app-pub-8558612038787013/9954780639',
+            request: AdRequest(),
+            adLoadCallback: InterstitialAdLoadCallback(
+              onAdLoaded: (ad) {
+                setState(
+                  () {
+                    _interstitialAd = ad;
+                    isInterstitialAdReady = true;
+                  },
+                );
+              },
+              onAdFailedToLoad: (error) {
+                isInterstitialAdReady = false;
+              },
+            ),
+          );
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          setState(() {
+            isInterstitialAdReady = false;
+          });
+        },
+      );
     }
   }
 
@@ -164,10 +262,19 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   "ଘୋଷଣା (Notification)",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
-                onTap: ()  {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const NotificationScreen(),));
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotificationScreen(),
+                      ));
                 },
-              )
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    _showInterstitialAd();
+                  },
+                  child: Text("Show Interstital Ad"))
             ],
           ),
         ),
@@ -282,6 +389,12 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   : const Center(
                       child: Text('No stories found'),
                     ),
+
+                    bottomNavigationBar: isBannerAdReady ? SizedBox(
+                      height: _bannerAd.size.height.toDouble(),
+                      width: _bannerAd.size.width.toDouble(),
+                      child: AdWidget(ad: _bannerAd),
+                    ) : null,
     );
   }
 }

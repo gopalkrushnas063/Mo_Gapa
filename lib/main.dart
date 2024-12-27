@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:mogapabahi/features/content/view/content_screen.view.dart';
 import 'package:mogapabahi/features/introduction/view/introduction_page.dart';
 import 'package:mogapabahi/features/notification/view/notification_screen.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   OneSignalService.initializeOneSignal();
   // OneSignalService.handleNotificationClick();
+  MobileAds.instance.initialize();
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -55,7 +57,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/story',
       builder: (BuildContext context, GoRouterState state) {
-        return  const NotificationScreen();
+        return const NotificationScreen();
       },
     ),
   ],
@@ -69,8 +71,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Color.fromARGB(255, 218, 142, 11),
     ));
-
-   
 
     OneSignalService.handleNotificationClick();
     return MaterialApp(
